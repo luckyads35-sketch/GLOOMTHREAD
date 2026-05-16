@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="umbra">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>GLOOMTHREAD · nocturne weave · shadow craft</title>
+  <!-- Typography: gothic serif + dark sans with midnight grace -->
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root[data-theme="umbra"] {
+      --bg: #0c0a0d;
+      --surface: #161218;
+      --surface-elevated: #221d24;
+      --text: #ece6f0;
+      --text-soft: #b8aec9;
+      --text-muted: #5e5468;
+      --accent: #9370db;
+      --accent-glow: #b99cf0;
+      --accent-deep: #6b4ea8;
+      --accent-subtle: #2e2738;
+      --border-light: #3a3245;
+      --shadow-sm: 0 12px 28px -8px rgba(0,0,0,0.6);
+      --shadow-lg: 0 25px 45px -12px rgba(0,0,0,0.8);
+      --transition: 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      --radius-card: 24px 4px 24px 4px;
+      --grid-gap: 1.8rem;
+    }
+
+    :root[data-theme="nocturne"] {
+      --bg: #f2eff5;
+      --surface: #ffffff;
+      --surface-elevated: #faf8ff;
+      --text: #2a2530;
+      --text-soft: #6e647c;
+      --text-muted: #cbc3d9;
+      --accent: #8b6fc9;
+      --accent-glow: #ad8fdf;
+      --accent-deep: #6e53a5;
+      --accent-subtle: #e8e2f0;
+      --border-light: #dbd3e5;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Manrope', sans-serif;
+      scroll-behavior: smooth;
+      font-weight: 400;
+      line-height: 1.45;
+    }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--surface); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 20px; }
+
+    /* header — shadow archive */
+    .gloomthread-header {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      background: rgba(12, 10, 13, 0.95);
+      backdrop-filter: blur(14px);
+      border-bottom: 2px solid var(--accent);
+      transition: var(--transition);
+    }
+    [data-theme="nocturne"] .gloomthread-header {
+      background: rgba(242, 239, 245, 0.96);
+      border-bottom-color: var(--accent);
+    }
+
+    .nav-gloom {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0.9rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .brand-gloom {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--accent-glow);
+      text-transform: uppercase;
+      border-left: 4px solid var(--accent);
+      padding-left: 14px;
+    }
+    .brand-gloom em {
+      font-style: normal;
+      font-size: 0.55rem;
+      font-weight: 500;
+      letter-spacing: 3px;
+      margin-left: 8px;
+      color: var(--text-soft);
+    }
+
+    .nav-gloom-links {
+      display: flex;
+      gap: 2rem;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+    }
+    .nav-gloom-links a {
+      color: var(--text-soft);
+      text-decoration: none;
+      transition: 0.2s;
+    }
+    .nav-gloom-links a:hover { color: var(--accent-glow); border-bottom: 1px dotted; padding-bottom: 2px; }
+
+    .gloom-utils {
+      display: flex;
+      gap: 1.4rem;
+      align-items: center;
+    }
+    #themeToggleGloom {
+      background: var(--accent-subtle);
+      border: none;
+      padding: 5px 12px;
+      border-radius: 60px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--text);
+    }
+    .gloom-cart {
+      position: relative;
+      cursor: pointer;
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+    }
+    .cart-count-gloom {
+      background: var(--accent);
+      color: #0c0a0d;
+      font-size: 0.55rem;
+      font-weight: 800;
+      border-radius: 30px;
+      width: 18px;
+      height: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: -8px;
+      right: -14px;
+    }
+
+    /* hero — midnight grove */
+    .hero-midnight {
+      min-height: 92vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2070&auto=format&fit=crop');
+      background-size: cover;
+      background-position: 50% 45%;
+    }
+    .hero-midnight::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(115deg, #0c0a0dcc 0%, #161218bb 100%);
+      z-index: 1;
+    }
+    .hero-gloom-content {
+      position: relative;
+      z-index: 2;
+      max-width: 660px;
+      padding: 0 6%;
+    }
+    .hero-gloom-badge {
+      font-size: 0.6rem;
+      letter-spacing: 5px;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--accent-glow);
+      border-left: 4px solid var(--accent);
+      padding-left: 14px;
+    }
+    .hero-gloom-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(4rem, 12vw, 7rem);
+      font-weight: 700;
+      line-height: 1.0;
+      margin-bottom: 0.8rem;
+      color: #efeaff;
+      letter-spacing: -1px;
+    }
+    .hero-gloom-offer {
+      font-size: 0.7rem;
+      font-weight: 500;
+      margin-bottom: 2rem;
+      background: rgba(0,0,0,0.55);
+      display: inline-block;
+      padding: 0.45rem 1.2rem;
+      backdrop-filter: blur(4px);
+      border-radius: 60px;
+    }
+
+    .btn-gloom {
+      background: var(--accent);
+      border: none;
+      padding: 0.85rem 2.2rem;
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-block;
+      text-decoration: none;
+      color: #0c0a0d;
+      border-radius: 60px;
+    }
+    .btn-gloom:hover {
+      background: var(--accent-glow);
+      transform: translateY(-2px);
+    }
+
+    /* collection header */
+    .gloom-collection {
+      max-width: 1440px;
+      margin: 3rem auto 0.5rem auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 0.7rem;
+    }
+    .gloom-collection h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+    .gloom-collection p {
+      color: var(--accent-glow);
+      font-size: 0.6rem;
+      letter-spacing: 2px;
+    }
+
+    /* product grid — shadow relic */
+    .grid-gloom {
+      max-width: 1440px;
+      margin: 2rem auto 5rem auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: var(--grid-gap);
+    }
+
+    .gloom-card {
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      transition: var(--transition);
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-sm);
+    }
+    .gloom-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent-glow);
+      box-shadow: var(--shadow-lg);
+    }
+    .gloom-media {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+      background: var(--surface-elevated);
+    }
+    .gloom-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .gloom-card:hover .gloom-media img { transform: scale(1.03); }
+    .gloom-quick {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(22, 18, 24, 0.94);
+      backdrop-filter: blur(8px);
+      padding: 0.8rem;
+      opacity: 0;
+      transition: 0.2s;
+      text-align: center;
+    }
+    .gloom-card:hover .gloom-quick { opacity: 1; }
+    .gloom-quick button {
+      background: var(--accent);
+      border: none;
+      width: 90%;
+      padding: 0.6rem;
+      font-size: 0.55rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: 0.2s;
+      color: #111;
+      border-radius: 60px;
+    }
+    .gloom-quick button:hover { background: white; color: #161218; }
+
+    .gloom-info {
+      padding: 1rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .gloom-detail h4 {
+      font-size: 0.5rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--accent-glow);
+      letter-spacing: 2px;
+    }
+    .gloom-detail h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+    .gloom-price { text-align: right; }
+    .gloom-current { font-weight: 800; font-size: 1rem; }
+    .gloom-old { font-size: 0.65rem; text-decoration: line-through; color: var(--text-muted); margin-left: 0.3rem; }
+
+    /* cart — shadow satchel */
+    .cart-overlay-gloom {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: rgba(0, 0, 0, 0.97);
+      backdrop-filter: blur(20px);
+      visibility: hidden;
+      opacity: 0;
+      transition: 0.2s;
+    }
+    .cart-overlay-gloom.active { visibility: visible; opacity: 1; }
+    .cart-gloom-panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 100%;
+      max-width: 520px;
+      height: 100vh;
+      background: var(--surface);
+      border-left: 4px solid var(--accent);
+      box-shadow: var(--shadow-lg);
+      z-index: 2001;
+      transform: translateX(100%);
+      transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      display: flex;
+      flex-direction: column;
+    }
+    .cart-overlay-gloom.active .cart-gloom-panel { transform: translateX(0); }
+    .cart-gloom-header {
+      padding: 1.4rem;
+      border-bottom: 1px solid var(--accent);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .cart-gloom-header h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--accent-glow);
+    }
+    .close-gloom-cart {
+      background: none;
+      border: none;
+      font-size: 1.3rem;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+    .cart-gloom-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .gloom-cart-item {
+      display: flex;
+      gap: 1rem;
+      padding: 0.8rem;
+      background: var(--surface-elevated);
+      border-left: 3px solid var(--accent);
+      position: relative;
+      border-radius: 24px;
+    }
+    .gloom-cart-img {
+      width: 70px;
+      height: 85px;
+      object-fit: cover;
+      border-radius: 16px;
+    }
+    .gloom-cart-details { flex: 1; }
+    .gloom-cart-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+    .gloom-cart-price { font-size: 0.75rem; color: var(--accent-glow); margin-top: 4px; }
+    .gloom-cart-qty {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .gloom-qty-btn {
+      background: var(--accent-subtle);
+      border: none;
+      width: 26px;
+      height: 26px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .gloom-qty-btn:hover { background: var(--accent); color: #111; }
+    .gloom-remove {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+    .cart-gloom-footer {
+      padding: 1.5rem;
+      border-top: 2px solid var(--accent);
+      background: var(--surface);
+    }
+    .gloom-total {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 800;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+    .gloom-checkout {
+      width: 100%;
+      background: var(--accent);
+      border: none;
+      padding: 0.9rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      cursor: pointer;
+      border-radius: 60px;
+      transition: 0.2s;
+      color: #0c0a0d;
+    }
+    .gloom-checkout:hover { background: var(--accent-glow); transform: scale(0.98);}
+    .empty-gloom-cart { text-align: center; color: var(--text-soft); padding: 2rem; font-size: 0.75rem;}
+
+    footer {
+      background: var(--surface-elevated);
+      margin-top: 2rem;
+      padding: 2rem 1.5rem;
+      border-top: 1px solid var(--accent);
+    }
+    .footer-gloom {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .footer-gloom-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent-glow);
+    }
+    .footer-gloom-regions {
+      font-size: 0.5rem;
+      letter-spacing: 3px;
+      color: var(--text-soft);
+      margin: 0.6rem 0 1rem;
+    }
+
+    /* modal — shadow circle */
+    .modal-gloom {
+      position: fixed;
+      inset: 0;
+      z-index: 2200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      background: rgba(0, 0, 0, 0.98);
+      backdrop-filter: blur(24px);
+      transition: opacity 0.25s;
+    }
+    .modal-gloom-block {
+      background: var(--surface);
+      max-width: 530px;
+      width: 100%;
+      border-radius: 60px 12px 60px 12px;
+      border-top: 5px solid var(--accent);
+      padding: 2rem 2rem 2.2rem;
+      position: relative;
+      text-align: center;
+      box-shadow: 0 35px 45px rgba(0,0,0,0.8);
+    }
+    .modal-gloom-close {
+      position: absolute;
+      top: 1rem;
+      right: 1.2rem;
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+    .modal-gloom-icon {
+      width: 70px;
+      height: 70px;
+      background: rgba(147, 112, 219, 0.2);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      font-size: 2rem;
+      border-radius: 60px;
+      border: 1px solid var(--accent);
+      color: var(--accent-glow);
+    }
+    .modal-gloom-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--accent-glow);
+      margin-bottom: 0.2rem;
+    }
+    .modal-gloom-desc {
+      color: var(--text-soft);
+      line-height: 1.5;
+      font-size: 0.85rem;
+      margin: 0.8rem 0;
+    }
+    .modal-gloom-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.6rem;
+    }
+    .btn-gloom-primary {
+      background: var(--accent);
+      border: none;
+      padding: 0.7rem 2rem;
+      font-weight: 800;
+      font-size: 0.7rem;
+      border-radius: 60px;
+      letter-spacing: 2px;
+      cursor: pointer;
+      color: #0c0a0d;
+    }
+    .btn-gloom-secondary {
+      background: transparent;
+      border: 1px solid var(--accent);
+      padding: 0.7rem 1.8rem;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 0.7rem;
+      cursor: pointer;
+      color: var(--text);
+    }
+    .modal-fade-gloom { opacity: 0; pointer-events: none; transition: opacity 0.2s; display: none; }
+
+    @media (max-width: 780px) {
+      .nav-gloom { flex-direction: column; gap: 0.6rem; }
+      .grid-gloom { gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- entry modal: GLOOMTHREAD invitation -->
+<div id="entryModalGloom" class="modal-gloom">
+  <div class="modal-gloom-block">
+    <button id="closeGloomModal" class="modal-gloom-close"><i class="fas fa-moon"></i></button>
+    <div class="modal-gloom-icon"><i class="fas fa-spider"></i></div>
+    <h2 class="modal-gloom-title">GLOOMTHREAD</h2>
+    <p class="modal-gloom-desc">Nocturne weave · shadow craft · midnight resilience. Garments woven from gloom and starlight. Enter the nocturne.</p>
+    <div class="modal-gloom-buttons">
+      <button id="enterGloomBtn" class="btn-gloom-primary">WEAVE THE GLOOM</button>
+      <button id="laterGloomBtn" class="btn-gloom-secondary">WANDER LATER</button>
+    </div>
+  </div>
+</div>
+
+<header class="gloomthread-header">
+  <div class="nav-gloom">
+    <div class="brand-gloom">GLOOMTHREAD<em>· NOCTURNE</em></div>
+    <nav class="nav-gloom-links">
+      <a href="#shopGloom">SHADOW</a>
+      <a href="#shopGloom">WEAVE</a>
+      <a href="#shopGloom">MIDNIGHT</a>
+      <a href="#">ABYSS</a>
+    </nav>
+    <div class="gloom-utils">
+      <button id="themeToggleGloom">🌙 NOCTURNE MODE</button>
+      <div class="gloom-cart" id="cartIconGloom">
+        <i class="fas fa-crescent"></i>
+        <span class="cart-count-gloom" id="cartCountGloom">0</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero-midnight">
+    <div class="hero-gloom-content">
+      <div class="hero-gloom-badge">SHADOW-WOVEN · NOCTURNAL · DEEP CRAFT</div>
+      <h1 class="hero-gloom-title">GLOOMTHREAD</h1>
+      <div class="hero-gloom-offer">First weave: <strong>15% off</strong> your first shadow relic</div>
+      <a href="#shopGloom" class="btn-gloom">ENTER LOOM →</a>
+    </div>
+  </section>
+
+  <div class="gloom-collection" id="shopGloom">
+    <h2>Nocturne Archive · Shadow Woven</h2>
+    <p>12 gloom artifacts</p>
+  </div>
+
+  <div class="grid-gloom" id="productGridGloom"></div>
+</main>
+
+<footer>
+  <div class="footer-gloom">
+    <div class="footer-gloom-brand">GLOOMTHREAD</div>
+    <div class="footer-gloom-regions">DARK FOREST · VEILED PEAKS · NIGHT HARBOR</div>
+    <p style="font-size:0.55rem; opacity:0.7;">© 2026 GLOOMTHREAD — woven from shadow, carried by dreamers.</p>
+  </div>
+</footer>
+
+<!-- CART SIDEBAR -->
+<div id="cartOverlayGloom" class="cart-overlay-gloom">
+  <div class="cart-gloom-panel">
+    <div class="cart-gloom-header">
+      <h3>🌙 GLOOM FOLIO</h3>
+      <button class="close-gloom-cart" id="closeCartGloom"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="cart-gloom-items" id="cartItemsGloom">
+      <div class="empty-gloom-cart">Your pack is empty.<br>Add shadow gear.</div>
+    </div>
+    <div class="cart-gloom-footer" id="cartFooterGloom" style="display: none;">
+      <div class="gloom-total"><span>Total (USD)</span><span id="cartTotalGloom">$0</span></div>
+      <button class="gloom-checkout" id="checkoutGloomBtn">🕷️ WEAVE ORDER</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // GLOOMTHREAD collection — shadow nocturne artifacts
+  const gloomProducts = [
+    { id: 1101, name: "Shadow Cloak", category: "OUTER", original: 890, price: 756, img: "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=687&auto=format&fit=crop", alt: "cloak" },
+    { id: 1102, name: "Nocturne Tunic", category: "TOPS", original: 325, price: 276, img: "https://images.unsplash.com/photo-1596755389378-c31d21fd1273?q=80&w=687&auto=format&fit=crop", alt: "tunic" },
+    { id: 1103, name: "Gloomweave Shirt", category: "LAYER", original: 560, price: 476, img: "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?q=80&w=715&auto=format&fit=crop", alt: "shirt" },
+    { id: 1104, name: "Umbra Pants", category: "BOTTOMS", original: 450, price: 382, img: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=600&auto=format&fit=crop", alt: "pants" },
+    { id: 1105, name: "Midnight Anorak", category: "KNIT", original: 770, price: 654, img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=600&auto=format&fit=crop", alt: "anorak" },
+    { id: 1106, name: "Void Vest", category: "VEST", original: 400, price: 340, img: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?q=80&w=687&auto=format&fit=crop", alt: "vest" },
+    { id: 1107, name: "Eclipse Smock", category: "SMOCK", original: 1020, price: 867, img: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?q=80&w=687&auto=format&fit=crop", alt: "smock" },
+    { id: 1108, name: "Starshade Coat", category: "COAT", original: 1350, price: 1147, img: "https://images.unsplash.com/photo-1598032895397-b9472444bf93?q=80&w=2070&auto=format&fit=crop", alt: "coat" },
+    { id: 1109, name: "Dusk Cargo", category: "BOTTOMS", original: 520, price: 442, img: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=600&auto=format&fit=crop", alt: "cargo" },
+    { id: 1110, name: "Lunar Hood", category: "HOODIE", original: 320, price: 272, img: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?q=80&w=764&auto=format&fit=crop", alt: "hoodie" },
+    { id: 1111, name: "Abyss Walker", category: "OUTER", original: 1750, price: 1487, img: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?q=80&w=688&auto=format&fit=crop", alt: "walker" },
+    { id: 1112, name: "Gloom Shacket", category: "SHIRT", original: 620, price: 527, img: "https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?q=80&w=687&auto=format&fit=crop", alt: "shacket" }
+  ];
+
+  let cartGloom = [];
+
+  const cartOverlayGloomDiv = document.getElementById('cartOverlayGloom');
+  const cartGloomIcon = document.getElementById('cartIconGloom');
+  const closeCartGloomBtn = document.getElementById('closeCartGloom');
+  const cartGloomContainer = document.getElementById('cartItemsGloom');
+  const cartGloomFooter = document.getElementById('cartFooterGloom');
+  const cartGloomTotalSpan = document.getElementById('cartTotalGloom');
+  const cartGloomCountSpan = document.getElementById('cartCountGloom');
+
+  function persistGloomCart() { localStorage.setItem('GLOOMTHREAD_CART', JSON.stringify(cartGloom)); }
+  function loadGloomCart() {
+    const saved = localStorage.getItem('GLOOMTHREAD_CART');
+    if (saved) cartGloom = JSON.parse(saved);
+    renderGloomCart();
+    updateGloomCount();
+  }
+  function updateGloomCount() { cartGloomCountSpan.innerText = cartGloom.reduce((sum,i)=>sum+i.qty,0); }
+
+  function renderGloomCart() {
+    if (!cartGloomContainer) return;
+    if (cartGloom.length === 0) {
+      cartGloomContainer.innerHTML = '<div class="empty-gloom-cart">Your pack is empty.<br>Add shadow gear.</div>';
+      cartGloomFooter.style.display = 'none';
+      updateGloomCount(); persistGloomCart(); return;
+    }
+    cartGloomFooter.style.display = 'block';
+    let html = ''; let total = 0;
+    cartGloom.forEach(item => {
+      total += item.price * item.qty;
+      html += `<div class="gloom-cart-item" data-id="${item.id}">
+          <img class="gloom-cart-img" src="${item.img}" alt="${item.name}">
+          <div class="gloom-cart-details">
+            <div class="gloom-cart-name">${item.name}</div>
+            <div class="gloom-cart-price">$${item.price.toLocaleString()}</div>
+            <div class="gloom-cart-qty">
+              <button class="gloom-qty-dec" data-id="${item.id}">−</button>
+              <span>${item.qty}</span>
+              <button class="gloom-qty-inc" data-id="${item.id}">+</button>
+            </div>
+          </div>
+          <button class="gloom-remove" data-id="${item.id}"><i class="fas fa-trash-alt"></i></button>
+        </div>`;
+    });
+    cartGloomContainer.innerHTML = html;
+    cartGloomTotalSpan.innerText = `$${total.toLocaleString()}`;
+    document.querySelectorAll('.gloom-qty-dec').forEach(btn => btn.addEventListener('click', () => updateGloomQty(parseInt(btn.dataset.id), -1)));
+    document.querySelectorAll('.gloom-qty-inc').forEach(btn => btn.addEventListener('click', () => updateGloomQty(parseInt(btn.dataset.id), 1)));
+    document.querySelectorAll('.gloom-remove').forEach(btn => btn.addEventListener('click', () => removeGloomItem(parseInt(btn.dataset.id))));
+    updateGloomCount(); persistGloomCart();
+  }
+  function updateGloomQty(pid, delta) {
+    const idx = cartGloom.findIndex(i=>i.id===pid);
+    if(idx !== -1){
+      const nq = cartGloom[idx].qty + delta;
+      if(nq <= 0) cartGloom.splice(idx,1);
+      else cartGloom[idx].qty = nq;
+      renderGloomCart();
+    }
+  }
+  function removeGloomItem(pid){ cartGloom = cartGloom.filter(i=>i.id!==pid); renderGloomCart(); }
+  function addToGloomCart(pid){
+    const prod = gloomProducts.find(p=>p.id===pid);
+    if(!prod) return;
+    const existing = cartGloom.find(i=>i.id===pid);
+    if(existing) existing.qty += 1;
+    else cartGloom.push({id:prod.id, name:prod.name, price:prod.price, qty:1, img:prod.img});
+    renderGloomCart();
+    const btn = document.querySelector(`.gloom-add-${pid}`);
+    if(btn){ let old = btn.innerText; btn.innerText="✓ ADDED"; setTimeout(()=>btn.innerText=old,700); }
+    cartOverlayGloomDiv.classList.add('active');
+  }
+
+  function renderGloomProducts() {
+    const container = document.getElementById('productGridGloom');
+    if(!container) return;
+    container.innerHTML = '';
+    gloomProducts.forEach(p => {
+      const disc = Math.round(((p.original-p.price)/p.original)*100);
+      const card = document.createElement('div');
+      card.className = 'gloom-card';
+      card.innerHTML = `
+        <div class="gloom-media">
+          <img src="${p.img}" alt="${p.alt||p.name}" loading="lazy">
+          <div class="gloom-quick"><button class="gloom-add-${p.id} add-gloom-btn" data-id="${p.id}">🌙 ADD TO PACK</button></div>
+        </div>
+        <div class="gloom-info">
+          <div class="gloom-detail"><h4>${p.category}</h4><h3>${p.name}</h3></div>
+          <div class="gloom-price"><span class="gloom-current">$${p.price.toLocaleString()}</span><span class="gloom-old">$${p.original.toLocaleString()}</span><span style="font-size:0.55rem;color:var(--accent-glow);display:block;text-align:right;">-${disc}%</span></div>
+        </div>`;
+      container.appendChild(card);
+    });
+    document.querySelectorAll('.add-gloom-btn').forEach(btn => btn.addEventListener('click', (e)=>{ e.preventDefault(); addToGloomCart(parseInt(btn.dataset.id)); }));
+  }
+
+  function initThemeGloom() {
+    const stored = localStorage.getItem('GLOOMTHREAD-theme');
+    let theme = stored || 'umbra';
+    document.documentElement.setAttribute('data-theme', theme);
+    const toggle = document.getElementById('themeToggleGloom');
+    if(toggle) toggle.textContent = theme === 'umbra' ? '🌙 NOCTURNE MODE' : '🕷️ UMBRA MODE';
+  }
+  function toggleThemeGloom() {
+    const curr = document.documentElement.getAttribute('data-theme');
+    const next = curr === 'umbra' ? 'nocturne' : 'umbra';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('GLOOMTHREAD-theme', next);
+    const toggleBtn = document.getElementById('themeToggleGloom');
+    if(toggleBtn) toggleBtn.textContent = next === 'umbra' ? '🌙 NOCTURNE MODE' : '🕷️ UMBRA MODE';
+  }
+
+  // modal handlers
+  const modalGloomElem = document.getElementById('entryModalGloom');
+  const enterGloom = document.getElementById('enterGloomBtn'), laterGloom = document.getElementById('laterGloomBtn'), closeGloomModalBtn = document.getElementById('closeGloomModal');
+  function closeGloomModalFunc() {
+    if(modalGloomElem){
+      modalGloomElem.classList.add('modal-fade-gloom');
+      setTimeout(()=>modalGloomElem.style.display='none',200);
+    }
+  }
+  if(enterGloom) enterGloom.addEventListener('click', closeGloomModalFunc);
+  if(laterGloom) laterGloom.addEventListener('click', closeGloomModalFunc);
+  if(closeGloomModalBtn) closeGloomModalBtn.addEventListener('click', closeGloomModalFunc);
+  if(modalGloomElem) modalGloomElem.addEventListener('click',(e)=>{ if(e.target===modalGloomElem) closeGloomModalFunc(); });
+
+  cartGloomIcon?.addEventListener('click',()=>cartOverlayGloomDiv.classList.add('active'));
+  closeCartGloomBtn?.addEventListener('click',()=>cartOverlayGloomDiv.classList.remove('active'));
+  cartOverlayGloomDiv?.addEventListener('click',(e)=>{ if(e.target===cartOverlayGloomDiv) cartOverlayGloomDiv.classList.remove('active'); });
+  document.getElementById('checkoutGloomBtn')?.addEventListener('click',()=>{ alert('Gloomthread accepts your shadow. Your nocturne order is woven into darkness.'); cartGloom=[]; renderGloomCart(); cartOverlayGloomDiv.classList.remove('active'); });
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{ a.addEventListener('click',function(e){ const hash=this.getAttribute('href'); if(hash==="#") return; const sec=document.querySelector(hash); if(sec){ e.preventDefault(); sec.scrollIntoView({behavior:'smooth'}); } }); });
+
+  renderGloomProducts();
+  initThemeGloom();
+  loadGloomCart();
+  document.getElementById('themeToggleGloom')?.addEventListener('click', toggleThemeGloom);
+</script>
+</body>
+</html>
